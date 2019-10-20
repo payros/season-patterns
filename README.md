@@ -3,7 +3,7 @@
 
 ## Getting Started
 1. Make sure you have **Node.js** and **Yarn** installed and a **Postgres DBMS** running on th default port
-2. Run **setup.sh** and type the default password when prompted *(This script will create the a3db and tables, import the data and install Yarn dependencies)* 
+2. Run **setup.sh** and type the default password if prompted *(This script will create the a3db and tables, import the data and install Yarn dependencies)* 
 3. Run **yarn start** *(This will deploy the web server and listen on port 8080)*
 4. On your local browser, navigate to [https://localhost:8080/](https://localhost:8080/)
 
