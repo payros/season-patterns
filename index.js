@@ -12,9 +12,6 @@ const pool = new Pool({
   port: env.DB_PORT,
 })
 
-
-
-console.log(env)
 app.use(express.static('public'))
 
 app.get('/get-monthly-temps', (req, res) => {
