@@ -503,6 +503,8 @@ sidebar.right {
   stroke-width:3;
 }
 
+
+
 .line-0 { stroke: #ffab00; }
 .line-1 { stroke: #e91e63; }
 
@@ -1015,4 +1017,23 @@ main section .fa-spin {
 
 .description-section p {
   text-indent: 30px;
+}
+
+footer {
+    text-align: center;
+    width: 100%;
+    margin: 40px 0 0px;
+    color: #ccc;
+    font-size: 12px;
+    font-weight: 100;
+    font-style: italic;
+}
+
+footer a {
+  color:#eee;
+}
+
+
+footer a:hover {
+  color:#fff;
 }
