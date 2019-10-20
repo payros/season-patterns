@@ -1,0 +1,209 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>Season Patterns</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/nouislider.css">
+  <link rel="stylesheet" href="css/leaflet.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+
+  <script src="https://use.fontawesome.com/fa4a0f0c07.js"></script>
+</head>
+
+<body>
+  <div class="curtain"></div>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+
+<header>
+  <h1><i class="fa fa-sun-o" style="padding-right:20px;"></i> Are the <strong>Seasons</strong> <span>Shifting</span> ? <i class="fa fa-snowflake-o" style="padding-left:20px;"></i> </h1>
+</header>
+
+<sidebar class="left">
+  <section class="legend-section">
+     <h4><em>Legend</em></h4>
+    <p class="control line"><span class="period">Monthly</span> Average Temperatures in <span class="units">Celsius</span> for the Control Period</p>
+    <p class="experimental line"><span class="period">Monthly</span> Average Temperatures in <span class="units">Celsius</span> for the Experimental Period</p>
+    <p class="control band">Sesonal Range for the Control Period<sup>1</sup></p>
+    <p class="experimental band">Sesonal Range for the Experimental Period<sup>2</sup></p>
+
+    <p class="footnote" style="margin-top:20px;"><sup>1</sup>Start and end dates are based on the meteorological definition of the season</p>
+    <p class="footnote"><sup>2</sup>Start and end dates are based on when the 9-day average matches the control period</p>
+  </section>
+  <section>
+    <h4><em>Season Start</em></h4>
+    <table class="season-start">
+      <thead>
+          <tr>
+            <th></th>
+            <th><i class="fa fa-thermometer-three-quarters fa-2x"></i></th>
+            <th><i class="fa fa-circle orange fa-2x"></i></th>
+            <th><i class="fa fa-circle red fa-2x"></i></th>
+          </tr>
+      </thead>
+      </tbody>
+          <tr class="spring">
+            <td>Spring</td>
+            <td>0</td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+          </tr>
+          <tr class="summer">
+            <td>Summer</td>
+            <td>0</td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+          </tr>
+          <tr class="fall">
+            <td>Fall</td>
+            <td>0</td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+          </tr>
+          <tr class="winter">
+            <td>Winter</td>
+            <td>0</td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+          </tr>
+      </tbody>
+    </table>
+  </section>
+    <section>
+    <h4><em>Season End</em></h4>
+    <table class="season-end">
+      <thead>
+          <tr>
+            <th></th>
+            <th><i class="fa fa-thermometer-three-quarters fa-2x"></i></th>
+            <th><i class="fa fa-circle orange fa-2x"></i></th>
+            <th><i class="fa fa-circle red fa-2x"></i></th>
+          </tr>
+      </thead>
+      </tbody>
+          <tr class="spring">
+            <td>Spring</td>
+            <td>0</td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+          </tr>
+          <tr class="summer">
+            <td>Summer</td>
+            <td>0</td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+          </tr>
+          <tr class="fall">
+            <td>Fall</td>
+            <td>0</td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+          </tr>
+          <tr class="winter">
+            <td>Winter</td>
+            <td>0</td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+            <td><span class="month">0</span>/<span class="day">0</span></td>
+          </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h4><em>Settings</em></h4>
+    <div class="btn-group">
+      <button id="monthly-btn" class="period-btn active">Monthly</button>
+      <button id="daily-btn" class="period-btn">Daily</button>
+    </div>
+    <div class="btn-group">
+      <button id="fahrenheit-btn" class="units-btn active">Fahrenheit</button>
+      <button id="celsius-btn" class="units-btn">Celsius</button>
+    </div>
+  </section>
+</sidebar>
+
+<main>
+  <section>
+    <h2 id="chart-title"><span class="orange"><span id="year-1">1885</span> - <span id="year-2">1904</span></span> and <span class="red"><span id="year-3">1970</span> - <span id="year-4">1989</span></span> <strong id="title-period">
+      monthly</strong> averages in <strong class="geo">the continental US</strong></h2>
+    <i id="loading-icon" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+    <div id="map-chart-wrapper">
+      <p class="temp-unit"><sup>0</sup><span>F</span></p>
+      <div id="map"></div>
+      <svg id="chart">
+        <defs>
+          <clipPath id="offset-clip-path">
+            <rect></rect>
+          </clipPath>
+          <clipPath id="with-offset-clip-path">
+            <rect></rect>
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+    <p class="data-source">Data source: <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/climate-normals/1981-2010-normals-data">NOAA 1981-2010 Climate Normals</a> - <a href="https://www1.ncdc.noaa.gov/pub/data/normals/1981-2010/source-datasets/ghcnd-all.tar.gz">Global Historical Climatology Network (GHCN) Daily Normals</a></p>
+  </section>
+  <section class="slider-section">
+    <div id="slider" class="noUi-target noUi-ltr noUi-horizontal"></div>
+  </section>
+  <section class="shift-section">
+    <div>
+      <h2 class="shift"><span class="fa-stack"><i class="fa fa-certificate fa-stack-2x"></i><i class="fa fa-circle-o fa-stack-1x fa-inverse"></i></span> Start of <strong>spring</strong> shifted by <span id="spring-shift">0</span> days</h2>
+      <h2 class="shift"><i class="fa fa-leaf"></i> Start of <strong>fall</strong> shifted by <span id="fall-shift">0</span> days</h2> 
+    </div>
+    <div>
+      <h2 class="shift"><i class="fa fa-sun-o"></i> Start of <strong>summer</strong> shifted by <span id="summer-shift">0</span> days</h2>
+      <h2 class="shift"><i class="fa fa-snowflake-o"></i> Start of <strong>winter</strong> shifted by <span id="winter-shift">0</span> days</h2>
+    </div>  
+  </section>
+  <section class="description-section">
+    <h4>What is the effect of climate change on the meteorological seasons?</h4>
+    <p>Although it is clear that temperatures all over the globe are rising, this visualization tries to illustrate the effects of such a rise seasonal weather for the continental US. Shrinking winters and longer summers are apparent in the <a href="/#years=1876,1889,1993,2012&states=AZ,CO,NM,UT&isCelsius=false">Southwest</a> and <a href="/#years=1876,1889,1993,2012&states=IL,IN,KY,MO,OH,TN,WV&isCelsius=false">Ohio Valley</a>, while other climate regions such as the <a href="/#years=1876,1889,1993,2012&states=MT,ND,NE,SD,WY&isCelsius=false">Northern Rockies and Plains</a> seems to suffer from the opposite effect. </p>
+    <p>As you explore this interactive visualization, try to formulate a hypothesis to explain different season patterns you may notice across different regions and range periods.</p>
+    <h4>Methodology</h4>
+    <p>This visualization uses a large dataset of over 85,000 weather stations obtained from the <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/climate-normals/1981-2010-normals-data">NOAA 1981-2010 Climate Normals</a> page. For performance, the minimum and maximum daily temperatures were converted into daily averages and those were aggregated by U.S. state.</p>
+    <p>To find the seasonal shift, a 9-day average temperature is calculated for the meteorological season start/end for <strong class="orange">period 1</strong>. Then, we search for a similar 9-day average (higher or lower, depending on the season) on <strong class="red">period 2</strong>, from the middle of the previous season to the middle of the next one. Once this day is found, we mark it as the new start/end for that season.</p>
+  </section>
+</main>
+
+<sidebar class="right">
+  <section class="geo-section">
+    <h4><em>Climate Regions</em> <i class="fa fa-info-circle" style="color:#999" title="Through climate analysis, National Centers for Environmental Information scientists have identified nine climatically consistent regions within the contiguous United States which are useful for putting current climate anomalies into a historical perspective" data-toggle="tooltip" data-placement="right"></i></h4>
+    <div id="region-btns"></div>
+        </section>
+    <section class="geo-section">
+
+    <h4><em>States</em></h4>
+    <button id="all-states" class="full-width active">All States</button>
+    <div id="state-btns">
+    </div>
+  </section>
+</sidebar>
+
+
+  <script src="js/vendor/modernizr-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
+  <script src="//d3js.org/d3.v5.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/moment.js"></script>
+  <script src="js/leaflet.js"></script>
+  <script src="js/nouislider.js"></script>
+  <script src="js/jquery-numerator.js"></script>
+  <script src="js/us-states.js"></script
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

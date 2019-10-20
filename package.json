@@ -1,0 +1,27 @@
+{
+  "name": "season-patterns",
+  "version": "1.0.0",
+  "description": "Data Visualization Project to Play with Weather Data",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/payros/season-patterns.git"
+  },
+  "author": "Pedro Carvalho",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/payros/season-patterns/issues"
+  },
+  "homepage": "https://github.com/payros/season-patterns#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg": "^7.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.3"
+  }
+}
