@@ -1,13 +1,15 @@
 let states = ["AK","AL","AR","AS","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","PR","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"]
-const regions = {'northwest':{'title':"Northwest", 'states':["WA","OR","ID"]},
-				 'northernRockies':{'title':"Northern Rockies and Plains", 'states':["MT","ND","SD","WY","NE"]},
-				 'upperMidwest':{'title':"Upper Midwest",'states':["MN","WI","MI","IA"]},
-				 'northeast':{'title':"Northeast",'states':["MD","PA","NY","DE","NJ","CT","RI","MA","VT","NH","ME"]},
-				 'west':{'title':"West",'states':["CA","NV"]},
-				 'southwest':{'title':"Southwest",'states':["UT","CO","NM","AZ"]},
-				 'south':{'title':"South",'states':["KS","OK","AR","LA","MS","TX"]},
-				 'ohioValley':{'title':"Ohio Valley",'states':["IL","IN","OH","WV","MO","KY","TN"]},
-				 'southeast':{'title':"Southeast",'states':["VA","NC","SC","GA","AL","FL"]}
+const regions = {'northwest':{'title':"Northwest", 'states':["WA","OR","ID"], isClimateRegion:true},
+				 'northernRockies':{'title':"Northern Rockies and Plains", 'states':["MT","ND","SD","WY","NE"], isClimateRegion:true},
+				 'upperMidwest':{'title':"Upper Midwest",'states':["MN","WI","MI","IA"], isClimateRegion:true},
+				 'northeast':{'title':"Northeast",'states':["MD","PA","NY","DE","NJ","CT","RI","MA","VT","NH","ME"], isClimateRegion:true},
+				 'west':{'title':"West",'states':["CA","NV"], isClimateRegion:true},
+				 'southwest':{'title':"Southwest",'states':["UT","CO","NM","AZ"], isClimateRegion:true},
+				 'south':{'title':"South",'states':["KS","OK","AR","LA","MS","TX"], isClimateRegion:true},
+				 'ohioValley':{'title':"Ohio Valley",'states':["IL","IN","OH","WV","MO","KY","TN"], isClimateRegion:true},
+				 'southeast':{'title':"Southeast",'states':["VA","NC","SC","GA","AL","FL"], isClimateRegion:true},
+				 'upperStates':{'title':"Upper States",'states':["WA","OR","ID","MT","ND","SD","WY","NE","MN","WI","MI","IA","MD","PA","NY","DE","NJ","CT","RI","MA","VT","NH","ME","IL","IN","OH","WV"], isClimateRegion:false},
+				 'lowerStates':{'title':"Lower States",'states':["CA","NV","UT","CO","NM","AZ","KS","OK","AR","LA","MS","TX","VA","NC","SC","GA","AL","FL","MO","KY","TN"], isClimateRegion:false}
 				};
 const margin = {top: 20, right: 15, bottom: 30, left: 35};
 const height  = 350 - margin.top - margin.bottom;
@@ -268,7 +270,7 @@ function updateAxis(){
 function getStatesParam(){
 	let selectedStates = ""
 
-	$('#state-btns button.active').each((i, e) => {
+	$('.state-btn.active').each((i, e) => {
 		selectedStates += (i ? ',' : '') + e.value;
 	})
 
@@ -377,7 +379,7 @@ function getHash(){
 
 	//Then update the states (if needed)
 	if(params.states) {
-		$('#state-btns button.active').removeClass("active")
+		$('.state-btn.active').removeClass("active")
 		params.states.split(",").forEach(st => {
 			$("button[value='"+ st + "']").addClass("active")
 		})
@@ -522,7 +524,7 @@ function updateTables(){
 
 function handleStateButtonClick(){
 	let st = []
-	$('#state-btns button.active').each((i, e) => {
+	$('.state-btn.active').each((i, e) => {
 		st.push(e.value);
 	})
 
@@ -534,7 +536,7 @@ function handleStateButtonClick(){
 		$('#all-states').removeClass('active');
 	}
 
-	$('#region-btns button').removeClass('active');
+	$('.region-btns').removeClass('active');
 	let stString = JSON.stringify(st);
 	Object.keys(regions).forEach((k) => {
 		if(JSON.stringify(regions[k].states.sort()) === stString) $('button[value='+ k +']').addClass('active')
@@ -545,7 +547,8 @@ function handleStateButtonClick(){
 
 function setGeoButtons(){
 	//Set Region buttons
-	$('#region-btns').html(Object.keys(regions).reduce((e,k) => e.append($('<button>').text(regions[k].title).val(k).addClass('full-width')), $('<div>')))
+	$('#region-btns').html(Object.keys(regions).reduce((e,k) => regions[k].isClimateRegion ? e.append($('<button>').text(regions[k].title).val(k).addClass('region-btns full-width')) : e, $('<div>')))
+	$('#state-btns').append(Object.keys(regions).reduce((e,k) => !regions[k].isClimateRegion ? e.append($('<button>').text(regions[k].title).val(k).addClass('region-btns full-width')) : e, $('<div>')))
 	//Get States to set state buttons
 	return new Promise((resolve, reject) => $.get('/get-states', function(data){
 		states = data
@@ -553,7 +556,7 @@ function setGeoButtons(){
 			o[s.id] = s.properties.name
 			return o
 		}, {})
-		$('#state-btns').html(states.reduce((e,s) => e.append($('<button>').attr('id', s+'-btn').text(s).attr("title", stateNames[s]).val(s).addClass('active')), $('<div>')))
+		$('#state-btns').append(states.reduce((e,s) => e.append($('<button>').attr('id', s+'-btn').text(s).attr("title", stateNames[s]).val(s).addClass('state-btn active')), $('<div>')))
 		setButtonListeners();
 		statesLayer.setStyle(styleFeatures);
 		resolve();
@@ -561,13 +564,13 @@ function setGeoButtons(){
 }
 
 function setButtonListeners(){
-	$('#state-btns button').click((e) => {
+	$('.state-btn').click((e) => {
 		let st = $(e.target);
-		let currActive = $('#state-btns button.active');
+		let currActive = $('.state-btn.active');
 		const isActive = st.hasClass('active');
 		currActive.removeClass("active");
 		if(currActive.length === 1 && isActive) {
-			$('#state-btns button').toggleClass('active');
+			$('.state-btn').toggleClass('active');
 		} else if(currActive.length === 1)  {
 			st.toggleClass('active');
 		} else {
@@ -576,12 +579,12 @@ function setButtonListeners(){
 	})
 
 	$('#all-states').click(() => {
-		$('#state-btns button').addClass('active');
+		$('.state-btn').addClass('active');
 	})
 
-	$('#region-btns button').click((e) => {
+	$('.region-btns').click((e) => {
 		let rg = $(e.target).val();
-		$('#state-btns button').removeClass('active');
+		$('.state-btn').removeClass('active');
 		
 		regions[rg].states.forEach((st) => {
 			$('button[value='+ st +']').addClass('active');
@@ -596,9 +599,10 @@ function setButtonListeners(){
 	})
 
 	//Hover events
-	$('#region-btns button').hover((e) => {
+	$('.region-btns').hover((e) => {
 		// $('#map').css('z-index', 3);
 		let stList = regions[$(e.target).val()].states
+		console.log(regions[$(e.target).val()].states)
 		statesLayer.setStyle((feature) => hoverStyleFeatures(feature, stList));
 		stList.forEach((st) => {
 			$('button[value='+ st +']').addClass('hover');
@@ -607,20 +611,20 @@ function setButtonListeners(){
 	}, (e) => {
 		// $('#map').css('z-index', 1);
 		statesLayer.setStyle(styleFeatures);
-		$('#state-btns button').removeClass('hover');
+		$('.state-btn').removeClass('hover');
 	})
 
 	$('#all-states').hover((e) => {
 		// $('#map').css('z-index', 3);
 		statesLayer.setStyle((feature) => hoverStyleFeatures(feature, states));
-		$('#state-btns button').addClass('hover');
+		$('.state-btn').addClass('hover');
 	}, (e) => {
 		// $('#map').css('z-index', 1);
 		statesLayer.setStyle(styleFeatures);
-		$('#state-btns button').removeClass('hover');
+		$('.state-btn').removeClass('hover');
 	})
 
-	$('#state-btns button').hover((e) => {
+	$('.state-btn').hover((e) => {
 		// $('#map').css('z-index', 3);
 		statesLayer.setStyle((feature) => hoverStyleFeatures(feature, [$(e.target).val()]));
 	}, (e) => {
@@ -634,7 +638,7 @@ function updateTitle(){
 	let geo
 	if($("#all-states").hasClass('active')) {
 		geo = "the Continental US";
-	} else if($('#region-btns button.active').length) {
+	} else if($('.region-btns.active').length) {
 		geo = Object.keys(regions).reduce((g, k) => {
 			if($("button[value='" + k + "']").hasClass('active')) g = "the " + regions[k].title
 			return g
@@ -669,7 +673,7 @@ function styleFeatures(feature){
                 fillOpacity:0
     		}
 	let myOpacity = 0;
-	$('#state-btns button.active').each((i, e) => {
+	$('.state-btn.active').each((i, e) => {
 		if(e.value === feature.id) styles.fillOpacity = 0.25;
 	})
 
