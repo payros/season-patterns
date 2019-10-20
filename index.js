@@ -55,4 +55,4 @@ app.get('/get-range', (req, res) => {
 	}).catch(e => console.log(e))
 })
 
-app.listen(env.PORT, () => console.log(`Server started. Now open your browser on  http:\/\/localhost:${env.PORT}!\/`))
+app.listen(env.PORT, () => console.log(`Server started. Now open your browser on  http:\/\/localhost:${env.PORT}\/`))
