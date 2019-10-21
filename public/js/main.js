@@ -461,23 +461,23 @@ function getTemps(lineNo){
 }
 
 function loading(add){
-	// if(add){
-	// 	loadingCount++;
-	// } else {
-	// 	loadingCount--;
-	// }
-	// if(loadingCount === 0) {
-	// 	$('#loading-icon').hide();
-	// } else {
-	// 	$('#loading-icon').show();
-	// }
+	if(add){
+		loadingCount++;
+	} else {
+		loadingCount--;
+	}
+	if(loadingCount === 0) {
+		$('#loading-icon').hide();
+	} else {
+		$('#loading-icon').show();
+	}
 }
 
 function updateAllTemps(){
 	if(sliderTimeout[0]) clearTimeout(sliderTimeout[0]);
 	if(sliderTimeout[1]) clearTimeout(sliderTimeout[1]);
 	sliderTimeout[0] = setTimeout(() => getTemps(0), 100);
-	sliderTimeout[1] = setTimeout(() => getTemps(1), 500);
+	sliderTimeout[1] = setTimeout(() => getTemps(1), 1000);
 }
 
 function updateSliderRange(newValues){
