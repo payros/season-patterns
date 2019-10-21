@@ -461,30 +461,31 @@ function getTemps(lineNo){
 }
 
 function loading(add){
-	// if(add){
-	// 	loadingCount++;
-	// } else {
-	// 	loadingCount--;
-	// }
-	// if(loadingCount === 0) {
-	// 	$('#loading-icon').hide();
-	// } else {
-	// 	$('#loading-icon').show();
-	// }
+	if(add){
+		loadingCount++;
+	} else {
+		loadingCount--;
+	}
+	if(loadingCount === 0) {
+		$('#loading-icon').hide();
+	} else {
+		$('#loading-icon').show();
+	}
 }
 
 function updateAllTemps(){
 	if(sliderTimeout[0]) clearTimeout(sliderTimeout[0]);
 	if(sliderTimeout[1]) clearTimeout(sliderTimeout[1]);
 	sliderTimeout[0] = setTimeout(() => getTemps(0), 100);
-	sliderTimeout[1] = setTimeout(() => getTemps(1), 500);
+	sliderTimeout[1] = setTimeout(() => getTemps(1), 1000);
 }
 
 function updateSliderRange(newValues){
 	let statesParam = getStatesParam()
 	if(statesParam.length) statesParam = '?' + statesParam.substr(1)
-
+	loading(true);
 	$.get('/get-range' + statesParam, function(data){
+		loading(false);
 		slider.noUiSlider.updateOptions({range: data});
 		if(newValues) slider.noUiSlider.set(newValues);
 	});
@@ -550,7 +551,9 @@ function setGeoButtons(){
 	$('#region-btns').html(Object.keys(regions).reduce((e,k) => regions[k].isClimateRegion ? e.append($('<button>').text(regions[k].title).val(k).addClass('region-btns full-width')) : e, $('<div>')))
 	$('#state-btns').append(Object.keys(regions).reduce((e,k) => !regions[k].isClimateRegion ? e.append($('<button>').text(regions[k].title).val(k).addClass('region-btns full-width')) : e, $('<div>')))
 	//Get States to set state buttons
+	loading(true);
 	return new Promise((resolve, reject) => $.get('/get-states', function(data){
+		loading(false);
 		states = data
 		let stateNames = statesData.features.reduce((o,s) => {
 			o[s.id] = s.properties.name
