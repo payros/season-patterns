@@ -477,7 +477,7 @@ function updateAllTemps(){
 	if(sliderTimeout[0]) clearTimeout(sliderTimeout[0]);
 	if(sliderTimeout[1]) clearTimeout(sliderTimeout[1]);
 	sliderTimeout[0] = setTimeout(() => getTemps(0), 100);
-	sliderTimeout[1] = setTimeout(() => getTemps(1), 1000);
+	sliderTimeout[1] = setTimeout(() => getTemps(1), 500);
 }
 
 function updateSliderRange(newValues){
