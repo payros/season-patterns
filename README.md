@@ -1,6 +1,6 @@
 # Season Patterns
 
-##[Live Demo](https://season-patterns.herokuapp.com/)
+## [Live Demo](https://season-patterns.herokuapp.com/)
 
 ## Getting Started
 1. Make sure you have **Node.js** and **Yarn** installed and a **Postgres DBMS** running on th default port
