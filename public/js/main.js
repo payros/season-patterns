@@ -483,8 +483,9 @@ function updateAllTemps(){
 function updateSliderRange(newValues){
 	let statesParam = getStatesParam()
 	if(statesParam.length) statesParam = '?' + statesParam.substr(1)
-
+	loading(true);
 	$.get('/get-range' + statesParam, function(data){
+		loading(false);
 		slider.noUiSlider.updateOptions({range: data});
 		if(newValues) slider.noUiSlider.set(newValues);
 	});
@@ -550,7 +551,9 @@ function setGeoButtons(){
 	$('#region-btns').html(Object.keys(regions).reduce((e,k) => regions[k].isClimateRegion ? e.append($('<button>').text(regions[k].title).val(k).addClass('region-btns full-width')) : e, $('<div>')))
 	$('#state-btns').append(Object.keys(regions).reduce((e,k) => !regions[k].isClimateRegion ? e.append($('<button>').text(regions[k].title).val(k).addClass('region-btns full-width')) : e, $('<div>')))
 	//Get States to set state buttons
+	loading(true);
 	return new Promise((resolve, reject) => $.get('/get-states', function(data){
+		loading(false);
 		states = data
 		let stateNames = statesData.features.reduce((o,s) => {
 			o[s.id] = s.properties.name
