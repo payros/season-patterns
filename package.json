@@ -18,7 +18,7 @@
   "homepage": "https://github.com/payros/season-patterns#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "mysql2": "^1.7.0",
     "pg": "^7.12.1",
     "socksjs": "^0.5.0",
