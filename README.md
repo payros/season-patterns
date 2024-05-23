@@ -1,7 +1,5 @@
 # Season Patterns
 
-## [Live Demo](https://season-patterns.herokuapp.com/)
-
 ## Getting Started
 1. Make sure you have **Node.js** and **Yarn** installed and a **Postgres DBMS** running on th default port
 2. Run **setup.sh** and type the default password if prompted *(This script will create the a3db and tables, import the data and install Yarn dependencies)* 
